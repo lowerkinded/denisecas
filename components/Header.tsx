@@ -24,7 +24,7 @@ export default function Header() {
             Upload yours
           </Button>
         </Group>
-        <Group mt="xs" ml="2px" gap="xl">
+        <Group mt="xs" ml="2px" gap="md">
           <Text
             c="teal.6"
             td="underline"
@@ -34,6 +34,16 @@ export default function Header() {
             target="_blank"
           >
             What's DENISE?
+          </Text>
+          <Text
+            c="teal.6"
+            td="underline"
+            component={Link}
+            href="https://www.ibo.org/programmes/diploma-programme/curriculum/dp-core/creativity-activity-and-service/"
+            rel="noopener"
+            target="_blank"
+          >
+            What's CAS?
           </Text>
           <Text
             c="teal.6"
