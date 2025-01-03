@@ -1,4 +1,11 @@
-import { Container, Divider, Group, SimpleGrid, Text } from "@mantine/core";
+import {
+  Container,
+  Divider,
+  Group,
+  SimpleGrid,
+  Space,
+  Text,
+} from "@mantine/core";
 import { Carousel, CarouselSlide } from "@mantine/carousel";
 import Header from "../components/Header";
 import ExperienceCard from "../components/ExperienceCard";
@@ -125,6 +132,9 @@ export default function HomePage() {
           />
         </SimpleGrid>
       </Container>
+      <footer>
+        <Space h="xl" />
+      </footer>
     </>
   );
 }
