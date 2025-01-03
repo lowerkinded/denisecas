@@ -2,3 +2,4 @@
 /.pnp.*
 /.yarn/*
 !/.yarn/{patches,plugins,releases,sdks,versions}
+/.env.*
