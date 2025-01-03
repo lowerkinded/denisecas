@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <header>
       <Container size={800}>
-        <Group justify="space-between" mt="xl">
+        <Group justify="space-between" mt={{ base: "md", md: "xl" }}>
           <Text
             size="3rem"
             fw="bold"
@@ -17,6 +17,22 @@ export default function Header() {
             }}
             component={Link}
             href="/"
+            visibleFrom="md"
+          >
+            DENISE CAS
+          </Text>
+          <Text
+            size="2rem"
+            fw="bold"
+            variant="gradient"
+            gradient={{
+              from: "teal.9",
+              to: "teal.2",
+              deg: 45,
+            }}
+            component={Link}
+            href="/"
+            hiddenFrom="md"
           >
             DENISE CAS
           </Text>
