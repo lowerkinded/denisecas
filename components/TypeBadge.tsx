@@ -1,38 +1,25 @@
 import { Badge, MantineSize } from "@mantine/core";
 
 export default function TypeBadge({
-  type,
+  variant,
   style,
   size,
 }: {
-  type: "creativity" | "activity" | "service";
+  variant: "creativity" | "activity" | "service";
   style: "adapt" | "outline";
   size: MantineSize;
 }) {
   const color =
-    type === "creativity" ? "blue" : type === "activity" ? "red" : "teal";
+    variant === "creativity" ? "blue" : variant === "activity" ? "red" : "teal";
 
   if (style === "adapt") {
     return (
       <>
-        <Badge
-          c={`${color}.5`}
-          bg={`${color}.1`}
-          radius="md"
-          size={size}
-          darkHidden
-        >
-          {type}
+        <Badge variant="light" color={color} size={size} darkHidden>
+          {variant}
         </Badge>
-        <Badge
-          c={`${color}.5`}
-          bg="transparent"
-          bd={`1px solid ${color}.5`}
-          radius="md"
-          size={size}
-          lightHidden
-        >
-          {type}
+        <Badge variant="outline" color={color} size={size} lightHidden>
+          {variant}
         </Badge>
       </>
     );
@@ -40,14 +27,8 @@ export default function TypeBadge({
 
   if (style === "outline") {
     return (
-      <Badge
-        c={`${color}.5`}
-        bg="transparent"
-        bd={`2px solid ${color}.5`}
-        radius="md"
-        size={size}
-      >
-        {type}
+      <Badge variant="outline" color={color} size={size}>
+        {variant}
       </Badge>
     );
   }

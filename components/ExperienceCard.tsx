@@ -46,7 +46,7 @@ export default function ExperienceCard(props: {
       <Space h="lg" flex="1" />
 
       <Group justify="space-between">
-        <TypeBadge type={props.type} style="adapt" size="lg" />
+        <TypeBadge variant={props.type} style="adapt" size="lg" />
         <Text c="gray.6">
           {from}–{to}
         </Text>

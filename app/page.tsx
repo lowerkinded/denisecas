@@ -50,13 +50,15 @@ export default function Page() {
         </CarouselSlide>
       </Carousel>
       <Container size={700} mt="xl">
-        <Group gap="sm">
-          <Text size="1rem" fw="bold" tt="uppercase" c="gray.6">
-            More from us
-          </Text>
-          <Divider flex="1" />
-        </Group>
-        <SimpleGrid cols={2} spacing="md" mt="md">
+        <Divider
+          label={
+            <Text fw="bold" tt="uppercase">
+              More from us
+            </Text>
+          }
+          labelPosition="left"
+        />
+        <SimpleGrid cols={2} mt="md">
           <ExperienceCard
             id={123}
             author={{
