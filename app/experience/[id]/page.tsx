@@ -1,7 +1,7 @@
 import { Container, Divider, Text } from "@mantine/core";
 import Header from "../../../components/Header";
 
-export default function ExperiencePage() {
+export default function Page() {
   return (
     <>
       <Header />

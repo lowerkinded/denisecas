@@ -11,7 +11,7 @@ import Header from "../components/Header";
 import ExperienceCard from "../components/ExperienceCard";
 import ExperienceSlide from "../components/ExperienceSlide";
 
-export default function HomePage() {
+export default function Page() {
   return (
     <>
       <Header />
