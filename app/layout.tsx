@@ -9,7 +9,7 @@ export const metadata = {
   description: "Come read about our CAS projects at DENISE.",
 };
 
-export default function Layout({ children }: { children: any }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
