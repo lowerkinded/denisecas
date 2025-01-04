@@ -1,53 +1,61 @@
-import {
-  Container,
-  Divider,
-  Group,
-  SimpleGrid,
-  Space,
-  Text,
-} from "@mantine/core";
+"use server";
+
+import { Container, Divider, SimpleGrid, Space, Text } from "@mantine/core";
 import { Carousel, CarouselSlide } from "@mantine/carousel";
 import Header from "../components/Header";
 import ExperienceCard from "../components/ExperienceCard";
 import ExperienceSlide from "../components/ExperienceSlide";
+import { neon } from "@neondatabase/serverless";
 
-export default function Page() {
+type Experience = {
+  id: number;
+  author_email: string;
+  author_name: string;
+  author_picture_url: string;
+  type: "creativity" | "activity" | "service";
+  from_date: Date;
+  to_date: Date;
+  summary: string;
+  cover_url?: string;
+  title: string;
+  md_description: string;
+  front_page_position?: number;
+  carousel_position?: number;
+};
+
+type Experiences = {
+  front_page: Experience[];
+  carousel: Experience[];
+};
+
+async function getExperiences(): Promise<Experiences> {
+  const sql = neon(`${process.env.DATABASE_URL}`);
+
+  return {
+    front_page:
+      await sql`SELECT * FROM experience WHERE front_page_position IS NOT NULL ORDER BY front_page_position ASC`,
+    carousel:
+      await sql`SELECT * FROM experience WHERE carousel_position IS NOT NULL ORDER BY carousel_position ASC`,
+  } as Experiences;
+}
+
+export default async function Page() {
+  const experiences = await getExperiences();
+
   return (
     <>
       <Header />
       <Carousel withIndicators loop slideSize={800} mt="xl" slideGap="md">
-        <CarouselSlide>
-          <ExperienceSlide
-            id={123}
-            type="service"
-            title="Walking my friend's dog!"
-            coverUrl="https://www.wallpaperhub.app/_next/image?url=https%3A%2F%2Fcdn.wallpaperhub.app%2Fcloudcache%2Fe%2F6%2F7%2F3%2F1%2F4%2Fe6731493cd50103e3561288c33a6a589c9bf67ab.jpg&w=384&q=75"
-          />
-        </CarouselSlide>
-        <CarouselSlide>
-          <ExperienceSlide
-            id={123}
-            type="service"
-            title="Walking my friend's dog!"
-            coverUrl="https://www.wallpaperhub.app/_next/image?url=https%3A%2F%2Fcdn.wallpaperhub.app%2Fcloudcache%2Fe%2F6%2F7%2F3%2F1%2F4%2Fe6731493cd50103e3561288c33a6a589c9bf67ab.jpg&w=384&q=75"
-          />
-        </CarouselSlide>
-        <CarouselSlide>
-          <ExperienceSlide
-            id={123}
-            type="service"
-            title="Walking my friend's dog!"
-            coverUrl="https://www.wallpaperhub.app/_next/image?url=https%3A%2F%2Fcdn.wallpaperhub.app%2Fcloudcache%2Fe%2F6%2F7%2F3%2F1%2F4%2Fe6731493cd50103e3561288c33a6a589c9bf67ab.jpg&w=384&q=75"
-          />
-        </CarouselSlide>
-        <CarouselSlide>
-          <ExperienceSlide
-            id={123}
-            type="service"
-            title="Walking my friend's dog!"
-            coverUrl="https://www.wallpaperhub.app/_next/image?url=https%3A%2F%2Fcdn.wallpaperhub.app%2Fcloudcache%2Fe%2F6%2F7%2F3%2F1%2F4%2Fe6731493cd50103e3561288c33a6a589c9bf67ab.jpg&w=384&q=75"
-          />
-        </CarouselSlide>
+        {experiences.carousel.map((it) => (
+          <CarouselSlide>
+            <ExperienceSlide
+              id={it.id}
+              type={it.type}
+              title={it.title}
+              coverUrl={it.cover_url!}
+            />
+          </CarouselSlide>
+        ))}
       </Carousel>
       <Container size={700} mt="xl">
         <Divider
@@ -59,79 +67,20 @@ export default function Page() {
           labelPosition="left"
         />
         <SimpleGrid cols={2} mt="md">
-          <ExperienceCard
-            id={123}
-            author={{
-              name: "Stephanie Kane jr.",
-              pictureUrl:
-                "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png",
-            }}
-            type="activity"
-            from={new Date()}
-            to={new Date()}
-            summary="My friend was on vacation and his dog needs a walk everyday, so I helped her!"
-            coverUrl="https://www.wallpaperhub.app/_next/image?url=https%3A%2F%2Fcdn.wallpaperhub.app%2Fcloudcache%2Fe%2F6%2F7%2F3%2F1%2F4%2Fe6731493cd50103e3561288c33a6a589c9bf67ab.jpg&w=384&q=75"
-          />
-          <ExperienceCard
-            id={123}
-            author={{
-              name: "Stephanie Kane jr.",
-              pictureUrl:
-                "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png",
-            }}
-            type="service"
-            from={new Date()}
-            to={new Date()}
-            summary="My friend was on vacation and his dog needs a walk everyday, so I helped her!"
-            coverUrl="https://www.wallpaperhub.app/_next/image?url=https%3A%2F%2Fcdn.wallpaperhub.app%2Fcloudcache%2Fe%2F6%2F7%2F3%2F1%2F4%2Fe6731493cd50103e3561288c33a6a589c9bf67ab.jpg&w=384&q=75"
-          />
-          <ExperienceCard
-            id={123}
-            author={{
-              name: "Stephanie Kane jr.",
-            }}
-            type="creativity"
-            from={new Date()}
-            to={new Date()}
-            summary="My friend was on vacation and his dog needs a walk everyday, so I helped her!"
-            coverUrl="https://www.wallpaperhub.app/_next/image?url=https%3A%2F%2Fcdn.wallpaperhub.app%2Fcloudcache%2Fe%2F6%2F7%2F3%2F1%2F4%2Fe6731493cd50103e3561288c33a6a589c9bf67ab.jpg&w=384&q=75"
-          />
-          <ExperienceCard
-            id={123}
-            author={{
-              name: "Stephanie Kane jr.",
-              pictureUrl:
-                "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png",
-            }}
-            type="activity"
-            from={new Date()}
-            to={new Date()}
-            summary="My friend was on vacation and his dog needs a walk everyday, so I helped her!"
-          />
-          <ExperienceCard
-            id={123}
-            author={{
-              name: "Stephanie Kane jr.",
-              pictureUrl:
-                "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png",
-            }}
-            type="activity"
-            from={new Date()}
-            to={new Date()}
-            summary="My friend was on vacation and his dog needs a walk everyday, so I helped her!"
-          />
-          <ExperienceCard
-            id={123}
-            author={{
-              name: "Stephanie Kane jr.",
-              pictureUrl:
-                "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png",
-            }}
-            type="activity"
-            from={new Date()}
-            to={new Date()}
-            summary="My friend was on vacation and his dog needs a walk everyday, so I helped her!"
-          />
+          {experiences.front_page.map((it) => (
+            <ExperienceCard
+              id={it.id}
+              author={{
+                name: it.author_name,
+                pictureUrl: it.author_picture_url,
+              }}
+              type={it.type}
+              from={it.from_date}
+              to={it.to_date}
+              summary={it.summary}
+              coverUrl={it.cover_url}
+            />
+          ))}
         </SimpleGrid>
       </Container>
       <footer>
