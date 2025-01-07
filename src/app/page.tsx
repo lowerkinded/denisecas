@@ -2,9 +2,9 @@
 
 import { Container, Divider, SimpleGrid, Space, Text } from "@mantine/core";
 import { Carousel, CarouselSlide } from "@mantine/carousel";
-import Header from "../components/Header";
-import ExperienceCard from "../components/ExperienceCard";
-import ExperienceSlide from "../components/ExperienceSlide";
+import Header from "@/components/Header";
+import ExperienceCard from "@/components/ExperienceCard";
+import ExperienceSlide from "@/components/ExperienceSlide";
 import { neon } from "@neondatabase/serverless";
 
 type Experience = {

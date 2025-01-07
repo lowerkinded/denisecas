@@ -1,17 +1,8 @@
 "use server";
 
-import { neon } from "@neondatabase/serverless";
+import { checkToken } from "@/lib/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-
-async function checkToken(token: string): Promise<boolean> {
-  const sql = neon(`${process.env.DATABASE_URL}`);
-
-  const response =
-    await sql`SELECT * FROM admin_login_token WHERE token = ${token}`;
-
-  return response.length === 1;
-}
 
 export default async function Layout({
   children,

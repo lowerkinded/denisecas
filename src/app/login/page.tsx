@@ -2,7 +2,7 @@
 
 import { Container, Stack, Text } from "@mantine/core";
 import { neon } from "@neondatabase/serverless";
-import { AdminLoginButton } from "../../components/AdminLoginButton";
+import { AdminLoginButton } from "@/components/AdminLoginButton";
 
 async function getNeonVersion(): Promise<string> {
   const sql = neon(`${process.env.DATABASE_URL}`);

@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { sendLoginLink } from "../app/login/actions";
-
+import { sendLoginLink } from "@/lib/auth";
 import { Button } from "@mantine/core";
 
 export function AdminLoginButton() {

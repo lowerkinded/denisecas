@@ -1,7 +1,7 @@
 "use server";
 
 import { Container, Divider, Text, Image } from "@mantine/core";
-import Header from "../../../components/Header";
+import Header from "@/components/Header";
 import { neon } from "@neondatabase/serverless";
 import { notFound } from "next/navigation";
 
