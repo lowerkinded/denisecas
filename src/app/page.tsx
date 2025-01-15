@@ -47,7 +47,7 @@ export default async function Page() {
       <Header />
       <Carousel withIndicators loop slideSize={800} mt="xl" slideGap="md">
         {experiences.carousel.map((it) => (
-          <CarouselSlide>
+          <CarouselSlide key={it.id}>
             <ExperienceSlide
               id={it.id}
               type={it.type}
@@ -69,6 +69,7 @@ export default async function Page() {
         <SimpleGrid cols={2} mt="md">
           {experiences.front_page.map((it) => (
             <ExperienceCard
+              key={it.id}
               id={it.id}
               author={{
                 name: it.author_name,
