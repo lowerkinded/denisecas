@@ -1,15 +1,18 @@
 "use server";
 
+import { AdminExperienceCarouselButton } from "@/components/AdminExperienceCarouselButton";
 import { AdminExperienceDeleteButton } from "@/components/AdminExperienceDeleteButton";
 import AdminExperienceEditForm from "@/components/AdminExperienceEditForm";
-import { getExperience } from "@/lib/experience";
+import { getExperience, getExperiences } from "@/lib/experience";
 import {
   Anchor,
   Breadcrumbs,
   Button,
   Container,
+  Divider,
   Group,
   Stack,
+  Text,
   Title,
 } from "@mantine/core";
 import Link from "next/link";
@@ -21,7 +24,14 @@ export default async function Page({
   params: Promise<{ id: string }>;
 }) {
   const id = (await params).id;
+  const experiences = await getExperiences();
   const experience = await getExperience(id);
+
+  const carouselPositions = experiences
+    .map((it) => it.carousel_position)
+    .filter((it) => it !== null);
+  const nextCarouselPosition =
+    carouselPositions.length === 0 ? 0 : Math.max(...carouselPositions) + 1;
 
   if (!experience) {
     notFound();
@@ -45,6 +55,32 @@ export default async function Page({
           <Title flex="1">Manage experience</Title>
           <AdminExperienceDeleteButton id={id} />
         </Group>
+        <Divider
+          label={
+            <Text fw="bold" tt="uppercase">
+              Homepage
+            </Text>
+          }
+          labelPosition="left"
+        />
+        <Group>
+          {experience.carousel_position ? (
+            <Text>Carousel position: {experience.carousel_position}</Text>
+          ) : (
+            <AdminExperienceCarouselButton
+              id={id}
+              position={nextCarouselPosition}
+            />
+          )}
+        </Group>
+        <Divider
+          label={
+            <Text fw="bold" tt="uppercase">
+              Edit information
+            </Text>
+          }
+          labelPosition="left"
+        />
         <AdminExperienceEditForm experience={experience} />
       </Stack>
     </Container>

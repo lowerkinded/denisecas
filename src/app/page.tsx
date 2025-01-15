@@ -53,6 +53,7 @@ export default async function Page() {
               type={it.type}
               title={it.title}
               coverUrl={it.cover_url!}
+              format="big"
             />
           </CarouselSlide>
         ))}

@@ -50,7 +50,7 @@ export default function AdminExperienceEditForm({
         },
       }}
       onSubmit={create}
-      submitText="Edit"
+      submitText="Save information"
       loading={loading}
     />
   );

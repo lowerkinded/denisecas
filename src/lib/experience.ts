@@ -121,3 +121,35 @@ export async function deleteExperience(id: string): Promise<void> {
 
     await sql`DELETE FROM experience WHERE id = ${id}`;
 }
+
+export async function setCarouselPosition(
+    id: number | string,
+    position: number | null,
+): Promise<void> {
+    const sql = neon(`${process.env.DATABASE_URL}`);
+
+    await sql`UPDATE experience SET carousel_position = ${position} WHERE id = ${id}`;
+}
+
+export async function setCarouselPositions(
+    values: { id: number; position: number | null }[],
+) {
+    const sql = neon(`${process.env.DATABASE_URL}`);
+
+    const valuesSql = values
+        .map((it, i) =>
+            `($${i * 2 + 1}::integer, $${i * 2 + 2}${
+                it === null ? "" : "::integer"
+            })`
+        )
+        .join(",");
+
+    await sql(
+        `
+        UPDATE experience
+        SET carousel_position = data.position
+        FROM (VALUES ${valuesSql}) AS data(id, position)
+        WHERE experience.id = data.id`,
+        values.flatMap((it) => [it.id, it.position]),
+    );
+}
