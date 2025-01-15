@@ -14,11 +14,11 @@ export async function getExperience(
         from_date: Date;
         to_date: Date;
         summary: string;
-        cover_url?: string;
+        cover_url: string | null;
         title: string;
         md_description: string;
-        front_page_position?: number;
-        carousel_position?: number;
+        front_page_position: number | null;
+        carousel_position: number | null;
     } | undefined
 > {
     const sql = neon(`${process.env.DATABASE_URL}`);
@@ -37,11 +37,11 @@ export async function getExperiences(): Promise<
         from_date: Date;
         to_date: Date;
         summary: string;
-        cover_url?: string;
+        cover_url: string | null;
         title: string;
         md_description: string;
-        front_page_position?: number;
-        carousel_position?: number;
+        front_page_position: number | null;
+        carousel_position: number | null;
     }[]
 > {
     const sql = neon(`${process.env.DATABASE_URL}`);
@@ -59,7 +59,7 @@ export async function insertExperience(experience: {
     from_date: Date;
     to_date: Date;
     summary: string;
-    // cover_url?: string;
+    // cover_url: string | null;
     title: string;
     md_description: string;
 }): Promise<{ id: number }> {
@@ -97,7 +97,7 @@ export async function updateExperience(id: number, experience: {
     from_date: Date;
     to_date: Date;
     summary: string;
-    // cover_url?: string;
+    // cover_url: string | null;
     title: string;
     md_description: string;
 }): Promise<void> {
