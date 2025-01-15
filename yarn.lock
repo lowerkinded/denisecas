@@ -347,7 +347,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/carousel@npm:^7.14.0":
+"@mantine/carousel@npm:7.14.0":
   version: 7.14.0
   resolution: "@mantine/carousel@npm:7.14.0"
   peerDependencies:
@@ -375,6 +375,33 @@ __metadata:
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
   checksum: 10c0/ac694c278f7aa34db053da5baf6ffcccd3e8e980569025e4071800a3d6c82b79038d7484377a4a186dd5295051fe306b0cde7eb56fca082c949de409a5b826d4
+  languageName: node
+  linkType: hard
+
+"@mantine/dates@npm:7.14.0":
+  version: 7.14.0
+  resolution: "@mantine/dates@npm:7.14.0"
+  dependencies:
+    clsx: "npm:^2.1.1"
+  peerDependencies:
+    "@mantine/core": 7.14.0
+    "@mantine/hooks": 7.14.0
+    dayjs: ">=1.0.0"
+    react: ^18.x || ^19.x
+    react-dom: ^18.x || ^19.x
+  checksum: 10c0/438df05e69100ee29e5642ffb56e5ecca6bf1689f205c1f945505f79b58703eedf637513e96427cad7eb6908384b8c346b1785df9c7bd07e82874a21dc450f6b
+  languageName: node
+  linkType: hard
+
+"@mantine/form@npm:7.14.0":
+  version: 7.14.0
+  resolution: "@mantine/form@npm:7.14.0"
+  dependencies:
+    fast-deep-equal: "npm:^3.1.3"
+    klona: "npm:^2.0.6"
+  peerDependencies:
+    react: ^18.x || ^19.x
+  checksum: 10c0/e8517cc8a58cc356249434042d9464db80d650ea4c77f69e9de0025d2d48af88aa4327e61f5d47cc75308e39ba4379d192af3a2ccf0226933f564cef8c9a231a
   languageName: node
   linkType: hard
 
@@ -567,6 +594,24 @@ __metadata:
   dependencies:
     tslib: "npm:^2.4.0"
   checksum: 10c0/b9df578401fc62405da9a6c31e79e447a2fd90f68b25b1daee12f2caf2821991bb89106f0397bc1acb4c4d84a8ce079d04b60b65f534496952e3bf8c9a52f40f
+  languageName: node
+  linkType: hard
+
+"@tabler/icons-react@npm:^3.28.1":
+  version: 3.28.1
+  resolution: "@tabler/icons-react@npm:3.28.1"
+  dependencies:
+    "@tabler/icons": "npm:3.28.1"
+  peerDependencies:
+    react: ">= 16"
+  checksum: 10c0/fe8b7baaae5a2c896c519c509d3c05e83cf4ea0c5b683add200cd2c0587a66a590a3ca26f54e91a8ee2b15c519c0854651c11490c2eab8ef111cee9b8e76b3e3
+  languageName: node
+  linkType: hard
+
+"@tabler/icons@npm:3.28.1":
+  version: 3.28.1
+  resolution: "@tabler/icons@npm:3.28.1"
+  checksum: 10c0/330f738b74d203e910382725f4ff6b9c177f8738a54c71fc6e56c3204cf21749b0512148650ae85c211692c49aa5e03f09f2ea8458688309d917bb65f698dbd0
   languageName: node
   linkType: hard
 
@@ -1180,6 +1225,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dayjs@npm:^1.11.13":
+  version: 1.11.13
+  resolution: "dayjs@npm:1.11.13"
+  checksum: 10c0/a3caf6ac8363c7dade9d1ee797848ddcf25c1ace68d9fe8678ecf8ba0675825430de5d793672ec87b24a69bf04a1544b176547b2539982275d5542a7955f35b7
+  languageName: node
+  linkType: hard
+
 "debug@npm:^3.2.7":
   version: 3.2.7
   resolution: "debug@npm:3.2.7"
@@ -1258,13 +1310,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "denisecas@workspace:."
   dependencies:
-    "@mantine/carousel": "npm:^7.14.0"
+    "@mantine/carousel": "npm:7.14.0"
     "@mantine/core": "npm:7.14.0"
+    "@mantine/dates": "npm:7.14.0"
+    "@mantine/form": "npm:7.14.0"
     "@mantine/hooks": "npm:7.14.0"
     "@neondatabase/serverless": "npm:^0.10.4"
+    "@tabler/icons-react": "npm:^3.28.1"
     "@types/node": "npm:20.14.8"
     "@types/react": "npm:18.3.3"
     "@types/react-dom": "npm:18.3.0"
+    dayjs: "npm:^1.11.13"
     embla-carousel-react: "npm:^7.1.0"
     eslint: "npm:8.57.0"
     eslint-config-next: "npm:14.2.4"
@@ -2883,6 +2939,13 @@ __metadata:
     object.assign: "npm:^4.1.4"
     object.values: "npm:^1.1.6"
   checksum: 10c0/a32679e9cb55469cb6d8bbc863f7d631b2c98b7fc7bf172629261751a6e7bc8da6ae374ddb74d5fbd8b06cf0eb4572287b259813d92b36e384024ed35e4c13e1
+  languageName: node
+  linkType: hard
+
+"klona@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "klona@npm:2.0.6"
+  checksum: 10c0/94eed2c6c2ce99f409df9186a96340558897b3e62a85afdc1ee39103954d2ebe1c1c4e9fe2b0952771771fa96d70055ede8b27962a7021406374fdb695fd4d01
   languageName: node
   linkType: hard
 

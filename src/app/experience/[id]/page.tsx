@@ -2,31 +2,8 @@
 
 import { Container, Divider, Text, Image } from "@mantine/core";
 import Header from "@/components/Header";
-import { neon } from "@neondatabase/serverless";
 import { notFound } from "next/navigation";
-
-type Experience = {
-  id: number;
-  author_email: string;
-  author_name: string;
-  author_picture_url: string;
-  type: "creativity" | "activity" | "service";
-  from_date: Date;
-  to_date: Date;
-  summary: string;
-  cover_url?: string;
-  title: string;
-  md_description: string;
-  front_page_position?: number;
-  carousel_position?: number;
-};
-
-async function getExperience(id: string): Promise<Experience | undefined> {
-  const sql = neon(`${process.env.DATABASE_URL}`);
-  const response = await sql`SELECT * FROM experience WHERE id = ${id}`;
-
-  return response[0] as Experience | undefined;
-}
+import { getExperience } from "@/lib/experience";
 
 export default async function Page({
   params,
