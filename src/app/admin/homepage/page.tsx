@@ -1,6 +1,7 @@
 "use server";
 
 import { AdminCarouselEditor } from "@/components/AdminCarouselEditor";
+import { AdminGridEditor } from "@/components/AdminGridEditor";
 import { getExperiences } from "@/lib/experience";
 import {
   Anchor,
@@ -37,6 +38,15 @@ export default async function Page() {
           labelPosition="left"
         />
         <AdminCarouselEditor experiences={experiences} />
+        <Divider
+          label={
+            <Text fw="bold" tt="uppercase">
+              Edit the grid (drag and drop)
+            </Text>
+          }
+          labelPosition="left"
+        />
+        <AdminGridEditor experiences={experiences} />
       </Stack>
     </Container>
   );

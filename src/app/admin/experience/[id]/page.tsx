@@ -3,6 +3,7 @@
 import { AdminExperienceCarouselButton } from "@/components/AdminExperienceCarouselButton";
 import { AdminExperienceDeleteButton } from "@/components/AdminExperienceDeleteButton";
 import AdminExperienceEditForm from "@/components/AdminExperienceEditForm";
+import { AdminExperienceGridButton } from "@/components/AdminExperienceGridButton";
 import { getExperience, getExperiences } from "@/lib/experience";
 import {
   Anchor,
@@ -30,8 +31,13 @@ export default async function Page({
   const carouselPositions = experiences
     .map((it) => it.carousel_position)
     .filter((it) => it !== null);
+  const frontPagePositions = experiences
+    .map((it) => it.front_page_position)
+    .filter((it) => it !== null);
   const nextCarouselPosition =
     carouselPositions.length === 0 ? 0 : Math.max(...carouselPositions) + 1;
+  const nextFrontPagePosition =
+    frontPagePositions.length === 0 ? 0 : Math.max(...frontPagePositions) + 1;
 
   if (!experience) {
     notFound();
@@ -70,6 +76,14 @@ export default async function Page({
             <AdminExperienceCarouselButton
               id={id}
               position={nextCarouselPosition}
+            />
+          )}
+          {experience.front_page_position ? (
+            <Text>Grid position: {experience.front_page_position}</Text>
+          ) : (
+            <AdminExperienceGridButton
+              id={id}
+              position={nextFrontPagePosition}
             />
           )}
         </Group>

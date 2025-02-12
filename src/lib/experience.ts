@@ -153,3 +153,35 @@ export async function setCarouselPositions(
         values.flatMap((it) => [it.id, it.position]),
     );
 }
+
+export async function setFrontPagePosition(
+    id: number | string,
+    position: number | null,
+): Promise<void> {
+    const sql = neon(`${process.env.DATABASE_URL}`);
+
+    await sql`UPDATE experience SET front_page_position = ${position} WHERE id = ${id}`;
+}
+
+export async function setFrontPagePositions(
+    values: { id: number; position: number | null }[],
+) {
+    const sql = neon(`${process.env.DATABASE_URL}`);
+
+    const valuesSql = values
+        .map((it, i) =>
+            `($${i * 2 + 1}::integer, $${i * 2 + 2}${
+                it === null ? "" : "::integer"
+            })`
+        )
+        .join(",");
+
+    await sql(
+        `
+        UPDATE experience
+        SET front_page_position = data.position
+        FROM (VALUES ${valuesSql}) AS data(id, position)
+        WHERE experience.id = data.id`,
+        values.flatMap((it) => [it.id, it.position]),
+    );
+}
