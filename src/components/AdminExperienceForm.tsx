@@ -8,6 +8,10 @@ import {
   Stack,
   Textarea,
   TextInput,
+  Image,
+  FileButton,
+  Space,
+  Avatar,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { isEmail, isNotEmpty, useForm } from "@mantine/form";
@@ -17,6 +21,8 @@ import {
   IconCalendarCheck,
   IconUser,
 } from "@tabler/icons-react";
+import { upload } from "@vercel/blob/client";
+import { useState } from "react";
 
 export type Values = {
   author: {
@@ -35,7 +41,13 @@ export type Values = {
 
 export default function AdminExperienceForm(props: {
   initialValues: Values;
-  onSubmit: (values: Values) => void;
+  initialAuthorPictureUrl: string | null;
+  initialCoverUrl: string | null;
+  onSubmit: (
+    values: Values,
+    pictureUrl: string | null,
+    coverUrl: string | null
+  ) => void;
   submitText: string;
   loading: boolean;
 }) {
@@ -63,29 +75,76 @@ export default function AdminExperienceForm(props: {
       md_description: isNotEmpty("Put in a description"),
     },
   });
+  const [authorPictureUrl, setAuthorPictureUrl] = useState(
+    props.initialAuthorPictureUrl
+  );
+  const [coverUrl, setCoverUrl] = useState(props.initialCoverUrl);
+
+  const setAuthorPicture = async (file: File | null) => {
+    if (!file) {
+      return;
+    }
+
+    const timestamp = new Date().getTime();
+    const blob = await upload(`images/${timestamp}`, file, {
+      access: "public",
+      handleUploadUrl: "/upload",
+    });
+
+    setAuthorPictureUrl(blob.url);
+  };
+
+  const setCover = async (file: File | null) => {
+    if (!file) {
+      return;
+    }
+
+    const timestamp = new Date().getTime();
+    const blob = await upload(`images/${timestamp}`, file, {
+      access: "public",
+      handleUploadUrl: "/upload",
+    });
+
+    setCoverUrl(blob.url);
+  };
 
   return (
-    <form onSubmit={form.onSubmit(props.onSubmit)}>
+    <form
+      onSubmit={form.onSubmit((v) =>
+        props.onSubmit(v, coverUrl, authorPictureUrl)
+      )}
+    >
       <Stack>
-        <Group align="start">
-          <TextInput
-            {...form.getInputProps("author.name")}
-            key={form.key("author.name")}
-            label="Author name"
-            placeholder="Stephanie Kane"
-            leftSectionPointerEvents="none"
-            leftSection={<IconUser size={16} />}
-            flex="1"
-          />
-          <TextInput
-            {...form.getInputProps("author.email")}
-            key={form.key("author.email")}
-            label="Author email"
-            placeholder="s.kane@denise.espritscholen.nl"
-            leftSectionPointerEvents="none"
-            leftSection={<IconAt size={16} />}
-            flex="1"
-          />
+        <Group align="end">
+          <Group flex="1" align="start">
+            <TextInput
+              {...form.getInputProps("author.name")}
+              key={form.key("author.name")}
+              label="Author name"
+              placeholder="Stephanie Kane"
+              leftSectionPointerEvents="none"
+              leftSection={<IconUser size={16} />}
+              flex="1"
+            />
+            <TextInput
+              {...form.getInputProps("author.email")}
+              key={form.key("author.email")}
+              label="Author email"
+              placeholder="s.kane@denise.espritscholen.nl"
+              leftSectionPointerEvents="none"
+              leftSection={<IconAt size={16} />}
+              flex="1"
+            />
+          </Group>
+          <Group align="center">
+            {authorPictureUrl && <Avatar src={authorPictureUrl} radius="sm" />}
+            <FileButton
+              onChange={setAuthorPicture}
+              accept="image/png,image/jpeg"
+            >
+              {(props) => <Button {...props}>Upload avatar</Button>}
+            </FileButton>
+          </Group>
         </Group>
         <Group align="start">
           <DateInput
@@ -136,6 +195,13 @@ export default function AdminExperienceForm(props: {
           label="Detailed description"
           description="At least two paragraphs are recommended."
         />
+        <Group align="center">
+          {coverUrl && <Image src={coverUrl} radius="md" w="30rem" />}
+          <Space flex="1" />
+          <FileButton onChange={setCover} accept="image/png,image/jpeg">
+            {(props) => <Button {...props}>Upload cover image</Button>}
+          </FileButton>
+        </Group>
         <Button
           disabled={props.loading}
           loading={props.loading}
@@ -144,6 +210,7 @@ export default function AdminExperienceForm(props: {
         >
           {props.submitText}
         </Button>
+        <Space h="2rem" />
       </Stack>
     </form>
   );

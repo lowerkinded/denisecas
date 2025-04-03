@@ -2,12 +2,12 @@
 
 import { neon } from "@neondatabase/serverless";
 
-export async function getExperience(id: string): Promise<
+export async function getExperience(id: number): Promise<
   | {
       id: number;
       author_email: string;
       author_name: string;
-      author_picture_url: string;
+      author_picture_url: string | null;
       type: "creativity" | "activity" | "service";
       from_date: Date;
       to_date: Date;
@@ -52,12 +52,12 @@ export async function getExperiences(): Promise<
 export async function insertExperience(experience: {
   author_email: string;
   author_name: string;
-  // author_picture_url: string;
+  author_picture_url: string | null;
   type: "creativity" | "activity" | "service";
   from_date: Date;
   to_date: Date;
   summary: string;
-  // cover_url: string | null;
+  cover_url: string | null;
   title: string;
   md_description: string;
 }): Promise<{ id: number }> {
@@ -67,19 +67,23 @@ export async function insertExperience(experience: {
     INSERT INTO experience (
         author_email,
         author_name,
+        author_picture_url,
         type,
         from_date,
         to_date,
         summary,
+        cover_url,
         title,
         md_description
     ) VALUES (
         ${experience.author_email},
         ${experience.author_name},
+        ${experience.author_picture_url},
         ${experience.type},
         ${experience.from_date},
         ${experience.to_date},
         ${experience.summary},
+        ${experience.cover_url},
         ${experience.title},
         ${experience.md_description}
     ) RETURNING id`;
@@ -92,12 +96,12 @@ export async function updateExperience(
   experience: {
     author_email: string;
     author_name: string;
-    // author_picture_url: string;
+    author_picture_url: string | null;
     type: "creativity" | "activity" | "service";
     from_date: Date;
     to_date: Date;
     summary: string;
-    // cover_url: string | null;
+    cover_url: string | null;
     title: string;
     md_description: string;
   }
@@ -108,16 +112,18 @@ export async function updateExperience(
     UPDATE experience 
     SET author_email = ${experience.author_email},
         author_name = ${experience.author_name},
+        author_picture_url = ${experience.author_picture_url},
         type = ${experience.type},
         from_date = ${experience.from_date},
         to_date = ${experience.to_date},
         summary = ${experience.summary},
+        cover_url = ${experience.cover_url},
         title = ${experience.title},
         md_description = ${experience.md_description}
     WHERE id = ${id}`;
 }
 
-export async function deleteExperience(id: string): Promise<void> {
+export async function deleteExperience(id: number): Promise<void> {
   const sql = neon(`${process.env.DATABASE_URL}`);
 
   await sql`DELETE FROM experience WHERE id = ${id}`;
@@ -157,7 +163,7 @@ export async function setCarouselPositions(
 }
 
 export async function setFrontPagePosition(
-  id: number | string,
+  id: number,
   position: number | null
 ): Promise<void> {
   const sql = neon(`${process.env.DATABASE_URL}`);

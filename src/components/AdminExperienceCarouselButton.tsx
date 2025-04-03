@@ -6,7 +6,7 @@ import { setCarouselPosition } from "@/lib/experience";
 import { useRouter } from "next/navigation";
 
 export function AdminExperienceCarouselButton(props: {
-  id: string;
+  id: number;
   position: number;
 }) {
   const router = useRouter();

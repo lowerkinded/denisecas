@@ -5,7 +5,7 @@ import { Button } from "@mantine/core";
 import { deleteExperience } from "@/lib/experience";
 import { useRouter } from "next/navigation";
 
-export function AdminExperienceDeleteButton({ id }: { id: string }) {
+export function AdminExperienceDeleteButton({ id }: { id: number }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 

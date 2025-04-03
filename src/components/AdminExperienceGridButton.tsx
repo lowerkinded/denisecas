@@ -6,7 +6,7 @@ import { setFrontPagePosition } from "@/lib/experience";
 import { useRouter } from "next/navigation";
 
 export function AdminExperienceGridButton(props: {
-  id: string;
+  id: number;
   position: number;
 }) {
   const router = useRouter();

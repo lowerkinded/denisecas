@@ -17,6 +17,7 @@
     "@mantine/hooks": "7.14.0",
     "@neondatabase/serverless": "^0.10.4",
     "@tabler/icons-react": "^3.28.1",
+    "@vercel/blob": "^0.27.1",
     "dayjs": "^1.11.13",
     "embla-carousel-react": "^7.1.0",
     "moment": "^2.30.1",

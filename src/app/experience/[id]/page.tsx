@@ -8,7 +8,7 @@ import { getExperience } from "@/lib/experience";
 export default async function Page({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: number }>;
 }) {
   const id = (await params).id;
   const experience = await getExperience(id);

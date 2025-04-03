@@ -9,7 +9,11 @@ export default function AdminExperienceCreateForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const create = async (values: Values) => {
+  const create = async (
+    values: Values,
+    pictureUrl: string | null,
+    coverUrl: string | null
+  ) => {
     console.log(values);
     try {
       setLoading(true);
@@ -17,12 +21,14 @@ export default function AdminExperienceCreateForm() {
       const { id } = await insertExperience({
         author_email: values.author.email,
         author_name: values.author.name,
+        author_picture_url: pictureUrl,
         type: values.type!,
         from_date: values.range.from!,
         to_date: values.range.to!,
         title: values.title,
         summary: values.summary,
         md_description: values.md_description,
+        cover_url: coverUrl,
       });
 
       router.push(`/admin/experience/${id}`);
@@ -47,6 +53,8 @@ export default function AdminExperienceCreateForm() {
           to: null,
         },
       }}
+      initialAuthorPictureUrl={null}
+      initialCoverUrl={null}
       onSubmit={create}
       submitText="Create"
       loading={loading}

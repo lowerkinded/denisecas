@@ -11,7 +11,11 @@ export default function AdminExperienceEditForm({
 }) {
   const [loading, setLoading] = useState(false);
 
-  const create = async (values: Values) => {
+  const create = async (
+    values: Values,
+    pictureUrl: string | null,
+    coverUrl: string | null
+  ) => {
     console.log(values);
     setLoading(true);
 
@@ -19,12 +23,14 @@ export default function AdminExperienceEditForm({
       await updateExperience(experience.id, {
         author_email: values.author.email,
         author_name: values.author.name,
+        author_picture_url: pictureUrl,
         type: values.type!,
         from_date: values.range.from!,
         to_date: values.range.to!,
         title: values.title,
         summary: values.summary,
         md_description: values.md_description,
+        cover_url: coverUrl,
       });
     } catch (e) {
       console.error(e);
@@ -49,6 +55,8 @@ export default function AdminExperienceEditForm({
           to: experience.to_date,
         },
       }}
+      initialAuthorPictureUrl={experience.author_picture_url}
+      initialCoverUrl={experience.cover_url}
       onSubmit={create}
       submitText="Save information"
       loading={loading}
