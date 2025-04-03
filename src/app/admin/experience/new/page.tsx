@@ -1,5 +1,3 @@
-"use server";
-
 import AdminExperienceCreateForm from "@/components/AdminExperienceCreateForm";
 import { Anchor, Breadcrumbs, Container, Stack, Title } from "@mantine/core";
 import Link from "next/link";

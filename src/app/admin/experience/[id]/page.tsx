@@ -1,4 +1,4 @@
-"use server";
+export const dynamic = "force-dynamic";
 
 import { AdminExperienceCarouselButton } from "@/components/AdminExperienceCarouselButton";
 import { AdminExperienceDeleteButton } from "@/components/AdminExperienceDeleteButton";
@@ -8,7 +8,6 @@ import { getExperience, getExperiences } from "@/lib/experience";
 import {
   Anchor,
   Breadcrumbs,
-  Button,
   Container,
   Divider,
   Group,

@@ -1,4 +1,4 @@
-"use server";
+export const dynamic = "force-dynamic";
 
 import { Container, Divider, Text, Image } from "@mantine/core";
 import Header from "@/components/Header";

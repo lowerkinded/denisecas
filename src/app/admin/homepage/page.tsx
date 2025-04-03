@@ -1,4 +1,4 @@
-"use server";
+export const dynamic = "force-dynamic";
 
 import { AdminCarouselEditor } from "@/components/AdminCarouselEditor";
 import { AdminGridEditor } from "@/components/AdminGridEditor";
