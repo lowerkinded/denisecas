@@ -1,4 +1,4 @@
-"use server";
+export const dynamic = "force-dynamic";
 
 import { Container, Divider, SimpleGrid, Space, Text } from "@mantine/core";
 import { Carousel, CarouselSlide } from "@mantine/carousel";
