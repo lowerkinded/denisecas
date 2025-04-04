@@ -4,6 +4,7 @@ import "@mantine/dates/styles.css";
 import React from "react";
 import { MantineProvider, ColorSchemeScript } from "@mantine/core";
 import { theme } from "@/theme";
+import { DatesProvider } from "@mantine/dates";
 
 export const metadata = {
   title: "CAS Showcase @ DENISE",
@@ -23,7 +24,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <MantineProvider theme={theme} defaultColorScheme="auto">
-          {children}
+          <DatesProvider settings={{ locale: "en", timezone: "UTC" }}>
+            {children}
+          </DatesProvider>
         </MantineProvider>
       </body>
     </html>
