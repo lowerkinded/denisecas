@@ -12,7 +12,8 @@ export default function AdminExperienceCreateForm() {
   const create = async (
     values: Values,
     authorPictureUrl: string | null,
-    coverUrl: string | null
+    coverUrl: string | null,
+    mainImageUrls: string[]
   ) => {
     console.log(values);
     try {
@@ -29,6 +30,7 @@ export default function AdminExperienceCreateForm() {
         summary: values.summary,
         md_description: values.md_description,
         cover_url: coverUrl,
+        main_image_urls: mainImageUrls,
       });
 
       router.push(`/admin/experience/${id}`);
@@ -55,6 +57,7 @@ export default function AdminExperienceCreateForm() {
       }}
       initialAuthorPictureUrl={null}
       initialCoverUrl={null}
+      initialMainImageUrls={[]}
       onSubmit={create}
       submitText="Create"
       loading={loading}

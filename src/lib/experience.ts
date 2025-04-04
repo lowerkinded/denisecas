@@ -13,6 +13,7 @@ export async function getExperience(id: number): Promise<
       to_date: Date;
       summary: string;
       cover_url: string | null;
+      main_image_urls: string[];
       title: string;
       md_description: string;
       front_page_position: number | null;
@@ -37,6 +38,7 @@ export async function getExperiences(): Promise<
     to_date: Date;
     summary: string;
     cover_url: string | null;
+    main_image_urls: string[];
     title: string;
     md_description: string;
     front_page_position: number | null;
@@ -58,6 +60,7 @@ export async function insertExperience(experience: {
   to_date: Date;
   summary: string;
   cover_url: string | null;
+  main_image_urls: string[];
   title: string;
   md_description: string;
 }): Promise<{ id: number }> {
@@ -73,6 +76,7 @@ export async function insertExperience(experience: {
         to_date,
         summary,
         cover_url,
+        main_image_urls,
         title,
         md_description
     ) VALUES (
@@ -84,6 +88,7 @@ export async function insertExperience(experience: {
         ${experience.to_date},
         ${experience.summary},
         ${experience.cover_url},
+        ${experience.main_image_urls},
         ${experience.title},
         ${experience.md_description}
     ) RETURNING id`;
@@ -102,6 +107,7 @@ export async function updateExperience(
     to_date: Date;
     summary: string;
     cover_url: string | null;
+    main_image_urls: string[];
     title: string;
     md_description: string;
   }
@@ -118,6 +124,7 @@ export async function updateExperience(
         to_date = ${experience.to_date},
         summary = ${experience.summary},
         cover_url = ${experience.cover_url},
+        main_image_urls = ${experience.main_image_urls},
         title = ${experience.title},
         md_description = ${experience.md_description}
     WHERE id = ${id}`;

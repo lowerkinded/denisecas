@@ -14,7 +14,8 @@ export default function AdminExperienceEditForm({
   const create = async (
     values: Values,
     authorPictureUrl: string | null,
-    coverUrl: string | null
+    coverUrl: string | null,
+    mainImageUrls: string[]
   ) => {
     console.log(values);
     setLoading(true);
@@ -31,6 +32,7 @@ export default function AdminExperienceEditForm({
         summary: values.summary,
         md_description: values.md_description,
         cover_url: coverUrl,
+        main_image_urls: mainImageUrls,
       });
     } catch (e) {
       console.error(e);
@@ -57,6 +59,7 @@ export default function AdminExperienceEditForm({
       }}
       initialAuthorPictureUrl={experience.author_picture_url}
       initialCoverUrl={experience.cover_url}
+      initialMainImageUrls={experience.main_image_urls}
       onSubmit={create}
       submitText="Save information"
       loading={loading}

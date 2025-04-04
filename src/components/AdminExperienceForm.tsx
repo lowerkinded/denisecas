@@ -43,10 +43,12 @@ export default function AdminExperienceForm(props: {
   initialValues: Values;
   initialAuthorPictureUrl: string | null;
   initialCoverUrl: string | null;
+  initialMainImageUrls: string[];
   onSubmit: (
     values: Values,
     authorPictureUrl: string | null,
-    coverUrl: string | null
+    coverUrl: string | null,
+    mainImageUrls: string[]
   ) => void;
   submitText: string;
   loading: boolean;
@@ -79,6 +81,9 @@ export default function AdminExperienceForm(props: {
     props.initialAuthorPictureUrl
   );
   const [coverUrl, setCoverUrl] = useState(props.initialCoverUrl);
+  const [mainImageUrls, setMainImageUrls] = useState(
+    props.initialMainImageUrls
+  );
 
   const setAuthorPicture = async (file: File | null) => {
     if (!file) {
@@ -111,7 +116,7 @@ export default function AdminExperienceForm(props: {
   return (
     <form
       onSubmit={form.onSubmit((v) =>
-        props.onSubmit(v, authorPictureUrl, coverUrl)
+        props.onSubmit(v, authorPictureUrl, coverUrl, mainImageUrls)
       )}
     >
       <Stack>

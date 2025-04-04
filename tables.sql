@@ -15,6 +15,7 @@ CREATE TABLE
         to_date TIMESTAMPTZ NOT NULL,
         summary TEXT NOT NULL,
         cover_url TEXT,
+        main_image_urls TEXT[] NOT NULL,
         title TEXT NOT NULL,
         md_description TEXT NOT NULL,
         front_page_position INTEGER,

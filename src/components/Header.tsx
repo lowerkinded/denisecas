@@ -62,7 +62,7 @@ export default function Header() {
             c="teal.6"
             td="underline"
             component={Link}
-            href="/experience/24"
+            href="/experience/1"
             rel="noopener"
             target="_blank"
           >
