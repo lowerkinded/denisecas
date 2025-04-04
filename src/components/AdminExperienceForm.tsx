@@ -45,7 +45,7 @@ export default function AdminExperienceForm(props: {
   initialCoverUrl: string | null;
   onSubmit: (
     values: Values,
-    pictureUrl: string | null,
+    authorPictureUrl: string | null,
     coverUrl: string | null
   ) => void;
   submitText: string;
@@ -111,7 +111,7 @@ export default function AdminExperienceForm(props: {
   return (
     <form
       onSubmit={form.onSubmit((v) =>
-        props.onSubmit(v, coverUrl, authorPictureUrl)
+        props.onSubmit(v, authorPictureUrl, coverUrl)
       )}
     >
       <Stack>

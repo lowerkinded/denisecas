@@ -13,7 +13,7 @@ export default function AdminExperienceEditForm({
 
   const create = async (
     values: Values,
-    pictureUrl: string | null,
+    authorPictureUrl: string | null,
     coverUrl: string | null
   ) => {
     console.log(values);
@@ -23,7 +23,7 @@ export default function AdminExperienceEditForm({
       await updateExperience(experience.id, {
         author_email: values.author.email,
         author_name: values.author.name,
-        author_picture_url: pictureUrl,
+        author_picture_url: authorPictureUrl,
         type: values.type!,
         from_date: values.range.from!,
         to_date: values.range.to!,
