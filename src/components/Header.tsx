@@ -1,4 +1,4 @@
-import { Button, Container, Group, Text } from "@mantine/core";
+import { Container, Group, Text } from "@mantine/core";
 import Link from "next/link";
 
 export default function Header() {
@@ -36,9 +36,6 @@ export default function Header() {
           >
             DENISE CAS
           </Text>
-          <Button variant="filled" component={Link} href="/new">
-            Upload yours
-          </Button>
         </Group>
         <Group mt="xs" ml="2px" gap="md">
           <Text
