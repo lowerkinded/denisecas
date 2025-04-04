@@ -23,7 +23,7 @@ export default function ExperienceSlide(props: {
       : { href: "fixme" };
 
   return (
-    <Paper shadow="md" withBorder>
+    <Paper shadow="md" withBorder radius="md">
       <AspectRatio ratio={16 / 9} w="100%" mx="auto" pos="relative">
         <BackgroundImage
           src={props.coverUrl ?? ""}

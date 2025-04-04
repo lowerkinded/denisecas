@@ -4,6 +4,9 @@ import { Container, Divider, Text, Image } from "@mantine/core";
 import Header from "@/components/Header";
 import { notFound } from "next/navigation";
 import { getExperience } from "@/lib/experience";
+import { Carousel, CarouselSlide } from "@mantine/carousel";
+import ExperienceSlide from "@/components/ExperienceSlide";
+import MainImageSlide from "@/components/MainImageSlide";
 
 export default async function Page({
   params,
@@ -20,10 +23,16 @@ export default async function Page({
   return (
     <>
       <Header />
+      {experience.main_image_urls.length !== 0 && (
+        <Carousel withIndicators loop slideSize={800} mt="xl" slideGap="md">
+          {experience.main_image_urls.map((it) => (
+            <CarouselSlide key={it}>
+              <MainImageSlide url={it} />
+            </CarouselSlide>
+          ))}
+        </Carousel>
+      )}
       <Container size={800}>
-        {experience.cover_url && (
-          <Image src={experience.cover_url} radius="md" mt="lg" />
-        )}
         {!experience.cover_url && <Divider mt="xl" />}
         <Text size="2rem" fw="bold" mt="lg">
           {experience.title}

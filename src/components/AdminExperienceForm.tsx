@@ -11,7 +11,9 @@ import {
   Image,
   FileButton,
   Space,
+  Text,
   Avatar,
+  Divider,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { isEmail, isNotEmpty, useForm } from "@mantine/form";
@@ -120,6 +122,14 @@ export default function AdminExperienceForm(props: {
       )}
     >
       <Stack>
+        <Divider
+          label={
+            <Text fw="bold" tt="uppercase">
+              Basic information
+            </Text>
+          }
+          labelPosition="left"
+        />
         <Group align="end">
           <Group flex="1" align="start">
             <TextInput
@@ -147,7 +157,7 @@ export default function AdminExperienceForm(props: {
               onChange={setAuthorPicture}
               accept="image/png,image/jpeg"
             >
-              {(props) => <Button {...props}>Upload avatar</Button>}
+              {(props) => <Button {...props}>Upload face</Button>}
             </FileButton>
           </Group>
         </Group>
@@ -200,6 +210,14 @@ export default function AdminExperienceForm(props: {
           label="Detailed description"
           description="At least two paragraphs are recommended."
         />
+        <Divider
+          label={
+            <Text fw="bold" tt="uppercase">
+              Cover image (shown on the homepage)
+            </Text>
+          }
+          labelPosition="left"
+        />
         <Group align="center">
           {coverUrl && <Image src={coverUrl} radius="md" w="30rem" />}
           <Space flex="1" />
@@ -207,6 +225,15 @@ export default function AdminExperienceForm(props: {
             {(props) => <Button {...props}>Upload cover image</Button>}
           </FileButton>
         </Group>
+        <Divider
+          label={
+            <Text fw="bold" tt="uppercase">
+              Main images (shown when clicked on)
+            </Text>
+          }
+          labelPosition="left"
+        />
+        <Text>Coming soon</Text>
         <Button
           disabled={props.loading}
           loading={props.loading}

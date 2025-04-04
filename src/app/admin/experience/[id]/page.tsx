@@ -63,37 +63,29 @@ export default async function Page({
         <Divider
           label={
             <Text fw="bold" tt="uppercase">
-              Homepage
+              Placement
             </Text>
           }
           labelPosition="left"
         />
         <Group>
-          {experience.carousel_position ? (
-            <Text>Carousel position: {experience.carousel_position}</Text>
-          ) : (
+          {experience.carousel_position === null ? (
             <AdminExperienceCarouselButton
               id={id}
               position={nextCarouselPosition}
             />
-          )}
-          {experience.front_page_position ? (
-            <Text>Grid position: {experience.front_page_position}</Text>
           ) : (
+            <Text>Carousel position: {experience.carousel_position}</Text>
+          )}
+          {experience.front_page_position === null ? (
             <AdminExperienceGridButton
               id={id}
               position={nextFrontPagePosition}
             />
+          ) : (
+            <Text>Grid position: {experience.front_page_position}</Text>
           )}
         </Group>
-        <Divider
-          label={
-            <Text fw="bold" tt="uppercase">
-              Edit information
-            </Text>
-          }
-          labelPosition="left"
-        />
         <AdminExperienceEditForm experience={experience} />
       </Stack>
     </Container>
