@@ -1,12 +1,14 @@
 export const dynamic = "force-dynamic";
 
-import { Container, Divider, Text, Image } from "@mantine/core";
+import { Container, Divider, Text, Image, Space, Title } from "@mantine/core";
 import Header from "@/components/Header";
 import { notFound } from "next/navigation";
 import { Carousel, CarouselSlide } from "@mantine/carousel";
 import ImageSlide from "@/components/ImageSlide";
 import { prisma } from "@/lib/prisma";
 import StrandBadge from "@/components/TypeBadge";
+import { remark } from "remark";
+import html from "remark-html";
 
 export default async function Page({
   params,
@@ -28,6 +30,8 @@ export default async function Page({
     notFound();
   }
 
+  const rendered = await remark().use(html).process(experience.md_description);
+
   return (
     <>
       <Header />
@@ -48,16 +52,17 @@ export default async function Page({
       )}
       <Container size={800}>
         {!experience.cover_url && <Divider mt="xl" />}
-        <Text size="2rem" fw="bold" mt="lg" mb="xs">
+        <Title mt="lg" mb="xs">
           {experience.title}
-        </Text>
+        </Title>
         <StrandBadge
           strand={experience.type}
           style="adapt"
           wording="a-x-experience"
           size="lg"
         />
-        <Text mt="lg">{experience.md_description}</Text>
+        <Space h="md" />
+        <div dangerouslySetInnerHTML={{ __html: rendered.toString() }} />
       </Container>
     </>
   );

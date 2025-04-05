@@ -220,7 +220,8 @@ export default function AdminExperienceForm(props: {
           {...form.getInputProps("mdDescription")}
           key={form.key("mdDescription")}
           label="Detailed description"
-          description="At least two paragraphs are recommended."
+          description="At least two paragraphs are recommended. Use Markdown syntax for headings and lists."
+          rows={10}
         />
         <Divider
           label={
