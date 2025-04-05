@@ -9,7 +9,7 @@ import {
   CardSection,
 } from "@mantine/core";
 import Link from "next/link";
-import TypeBadge from "./TypeBadge";
+import StrandBadge from "./TypeBadge";
 import moment from "moment";
 import { Experience } from "@prisma/client";
 
@@ -49,7 +49,12 @@ export default function ExperienceCard({
       <Space h="lg" flex="1" />
 
       <Group justify="space-between">
-        <TypeBadge variant={experience.type} style="adapt" size="lg" />
+        <StrandBadge
+          strand={experience.type}
+          style="adapt"
+          wording="x"
+          size="lg"
+        />
         <Text c="gray.6">
           {from}–{to}
         </Text>

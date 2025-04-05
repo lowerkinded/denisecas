@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { Carousel, CarouselSlide } from "@mantine/carousel";
 import ImageSlide from "@/components/ImageSlide";
 import { prisma } from "@/lib/prisma";
+import StrandBadge from "@/components/TypeBadge";
 
 export default async function Page({
   params,
@@ -47,9 +48,15 @@ export default async function Page({
       )}
       <Container size={800}>
         {!experience.cover_url && <Divider mt="xl" />}
-        <Text size="2rem" fw="bold" mt="lg">
+        <Text size="2rem" fw="bold" mt="lg" mb="xs">
           {experience.title}
         </Text>
+        <StrandBadge
+          strand={experience.type}
+          style="adapt"
+          wording="a-x-experience"
+          size="lg"
+        />
         <Text mt="lg">{experience.md_description}</Text>
       </Container>
     </>

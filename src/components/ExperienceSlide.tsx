@@ -8,7 +8,7 @@ import {
   Text,
 } from "@mantine/core";
 import Link from "next/link";
-import TypeBadge from "./TypeBadge";
+import StrandBadge from "./TypeBadge";
 import { Experience } from "@prisma/client";
 
 export default function ExperienceSlide({
@@ -42,9 +42,10 @@ export default function ExperienceSlide({
               justify="end"
             >
               <Group>
-                <TypeBadge
-                  variant={experience.type}
+                <StrandBadge
+                  strand={experience.type}
                   style="outline"
+                  wording="x"
                   size={format === "big" ? "xl" : "md"}
                 />
                 <Text

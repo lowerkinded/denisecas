@@ -1,30 +1,38 @@
 import { Badge, MantineSize } from "@mantine/core";
 import { ExperienceType } from "@prisma/client";
 
-export default function TypeBadge({
-  variant,
+export default function StrandBadge({
+  strand,
   style,
+  wording,
   size,
 }: {
-  variant: ExperienceType;
+  strand: ExperienceType;
   style: "adapt" | "outline";
+  wording: "x" | "a-x-experience";
   size: MantineSize;
 }) {
   const color =
-    variant === ExperienceType.CREATIVITY
+    strand === ExperienceType.CREATIVITY
       ? "blue"
-      : variant === ExperienceType.ACTIVITY
+      : strand === ExperienceType.ACTIVITY
       ? "red"
       : "teal";
+  const text =
+    wording === "x"
+      ? strand.toLocaleLowerCase()
+      : strand === ExperienceType.ACTIVITY
+      ? `An activity experience`
+      : `A ${strand} experience`;
 
   if (style === "adapt") {
     return (
       <>
         <Badge variant="light" color={color} size={size} darkHidden>
-          {variant}
+          {text}
         </Badge>
         <Badge variant="outline" color={color} size={size} lightHidden>
-          {variant}
+          {text}
         </Badge>
       </>
     );
@@ -33,7 +41,7 @@ export default function TypeBadge({
   if (style === "outline") {
     return (
       <Badge variant="outline" color={color} size={size}>
-        {variant}
+        {text}
       </Badge>
     );
   }
