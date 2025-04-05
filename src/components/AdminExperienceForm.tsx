@@ -26,7 +26,7 @@ import {
 import { upload } from "@vercel/blob/client";
 import { useState } from "react";
 
-export type Values = {
+export type ValuesIn = {
   author: {
     name: string;
     email: string;
@@ -38,24 +38,40 @@ export type Values = {
   type: "creativity" | "activity" | "service" | null;
   title: string;
   summary: string;
-  md_description: string;
+  mdDescription: string;
+};
+
+export type ValuesOut = {
+  author: {
+    name: string;
+    email: string;
+  };
+  range: {
+    from: Date;
+    to: Date;
+  };
+  type: "creativity" | "activity" | "service";
+  title: string;
+  summary: string;
+  mdDescription: string;
 };
 
 export default function AdminExperienceForm(props: {
-  initialValues: Values;
+  initialValues: ValuesIn;
   initialAuthorPictureUrl: string | null;
   initialCoverUrl: string | null;
   initialMainImageUrls: string[];
-  onSubmit: (
-    values: Values,
+  submitAction: (
+    values: ValuesOut,
     authorPictureUrl: string | null,
     coverUrl: string | null,
     mainImageUrls: string[]
-  ) => void;
+  ) => Promise<void>;
   submitText: string;
-  loading: boolean;
 }) {
-  const form = useForm<Values>({
+  const [loading, setLoading] = useState(false);
+
+  const form = useForm<ValuesIn>({
     mode: "uncontrolled",
     initialValues: props.initialValues,
     validate: {
@@ -76,7 +92,7 @@ export default function AdminExperienceForm(props: {
       type: isNotEmpty("Choose a type"),
       title: isNotEmpty("Put in a title"),
       summary: isNotEmpty("Put in a summary"),
-      md_description: isNotEmpty("Put in a description"),
+      mdDescription: isNotEmpty("Put in a description"),
     },
   });
   const [authorPictureUrl, setAuthorPictureUrl] = useState(
@@ -117,9 +133,16 @@ export default function AdminExperienceForm(props: {
 
   return (
     <form
-      onSubmit={form.onSubmit((v) =>
-        props.onSubmit(v, authorPictureUrl, coverUrl, mainImageUrls)
-      )}
+      onSubmit={form.onSubmit(async (v) => {
+        setLoading(true);
+        await props.submitAction(
+          v as ValuesOut,
+          authorPictureUrl,
+          coverUrl,
+          mainImageUrls
+        );
+        setLoading(false);
+      })}
     >
       <Stack>
         <Divider
@@ -205,8 +228,8 @@ export default function AdminExperienceForm(props: {
           placeholder="I went to the gym four times per week with a friend"
         />
         <Textarea
-          {...form.getInputProps("md_description")}
-          key={form.key("md_description")}
+          {...form.getInputProps("mdDescription")}
+          key={form.key("mdDescription")}
           label="Detailed description"
           description="At least two paragraphs are recommended."
         />
@@ -234,12 +257,7 @@ export default function AdminExperienceForm(props: {
           labelPosition="left"
         />
         <Text>Coming soon</Text>
-        <Button
-          disabled={props.loading}
-          loading={props.loading}
-          type="submit"
-          mt="md"
-        >
+        <Button disabled={loading} loading={loading} type="submit" mt="md">
           {props.submitText}
         </Button>
         <Space h="2rem" />

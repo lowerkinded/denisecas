@@ -3,3 +3,4 @@
 /.yarn/*
 !/.yarn/{patches,plugins,releases,sdks,versions}
 /.env.*
+/.env

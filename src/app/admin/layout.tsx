@@ -1,4 +1,5 @@
-import { checkToken } from "@/lib/auth";
+
+import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -14,7 +15,9 @@ export default async function Layout({
     redirect("/login");
   }
 
-  if (!(await checkToken(token.value))) {
+  const row = await prisma.adminLoginToken.findFirst({ where: { token: token.value } });
+
+  if (!row) {
     redirect("/login");
   }
 

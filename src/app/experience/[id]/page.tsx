@@ -3,18 +3,25 @@ export const dynamic = "force-dynamic";
 import { Container, Divider, Text, Image } from "@mantine/core";
 import Header from "@/components/Header";
 import { notFound } from "next/navigation";
-import { getExperience } from "@/lib/experience";
 import { Carousel, CarouselSlide } from "@mantine/carousel";
-import ExperienceSlide from "@/components/ExperienceSlide";
 import MainImageSlide from "@/components/MainImageSlide";
+import { prisma } from "@/lib/prisma";
 
 export default async function Page({
   params,
 }: {
-  params: Promise<{ id: number }>;
+  params: Promise<{ id: string }>;
 }) {
-  const id = (await params).id;
-  const experience = await getExperience(id);
+  const id = parseInt((await params).id);
+
+  if (isNaN(id)) {
+    notFound();
+  }
+
+  const experience = await prisma.experience.findFirst({
+    where: { id },
+    include: { front_page: true, carousel: true },
+  });
 
   if (!experience) {
     notFound();

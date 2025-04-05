@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+}
+
+model AdminLoginToken {
+  token     String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  timestamp DateTime @default(now())
+}
+
+enum ExperienceType {
+  CREATIVITY
+  ACTIVITY
+  SERVICE
+}
+
+model Experience {
+  id                 Int                  @id @default(autoincrement())
+  author_email       String
+  author_name        String
+  author_picture_url String?
+  type               ExperienceType
+  from_date          DateTime
+  to_date            DateTime
+  summary            String
+  cover_url          String?
+  main_image_urls    String[]
+  title              String
+  md_description     String
+  front_page         FrontPageExperience?
+  carousel           CarouselExperience?
+}
+
+model FrontPageExperience {
+  id         Int        @id @default(autoincrement())
+  experience Experience @relation(fields: [id], references: [id])
+  position   Int
+}
+
+model CarouselExperience {
+  id         Int        @id @default(autoincrement())
+  experience Experience @relation(fields: [id], references: [id])
+  position   Int
+}

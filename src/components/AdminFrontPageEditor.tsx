@@ -1,27 +1,23 @@
 "use client";
 
-import {
-  getExperiences,
-  setFrontPagePosition,
-  setFrontPagePositions,
-} from "@/lib/experience";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { Box, Button, Group, Stack, Text } from "@mantine/core";
 import { useListState } from "@mantine/hooks";
 import ExperienceSlide from "./ExperienceSlide";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Experience } from "@prisma/client";
 
-export function AdminGridEditor({
-  experiences,
+export default function AdminFrontPageEditor({
+  initial,
+  updateAction,
+  removeAction,
 }: {
-  experiences: Awaited<ReturnType<typeof getExperiences>>;
+  initial: Experience[];
+  updateAction: (experiences: Experience[]) => Promise<void>;
+  removeAction: (id: number) => Promise<void>;
 }) {
-  const [values, handlers] = useListState(
-    experiences
-      .filter((it) => it.front_page_position !== null)
-      .toSorted((a, b) => a.front_page_position! - b.front_page_position!)
-  );
+  const [values, handlers] = useListState(initial);
   const [resend, setResend] = useState(Symbol());
 
   useEffect(() => {
@@ -29,9 +25,7 @@ export function AdminGridEditor({
       return;
     }
 
-    setFrontPagePositions(
-      values.map((it, i) => ({ id: it.id, position: i }))
-    ).catch(console.error);
+    updateAction(values);
   }, [resend]);
 
   const items = values.map((it, i) => (
@@ -47,13 +41,7 @@ export function AdminGridEditor({
               {...provided.dragHandleProps}
               ref={provided.innerRef}
             >
-              <ExperienceSlide
-                id={it.id}
-                type={it.type}
-                title={it.title}
-                coverUrl={it.cover_url!}
-                format="small"
-              />
+              <ExperienceSlide experience={it} format="small" />
             </div>
           )}
         </Draggable>
@@ -67,12 +55,7 @@ export function AdminGridEditor({
           onClick={async () => {
             handlers.remove(values.findIndex((other) => other.id === it.id));
             setResend(Symbol());
-
-            try {
-              await setFrontPagePosition(it.id, null);
-            } catch (e) {
-              console.error(e);
-            }
+            await removeAction(it.id);
           }}
         >
           Remove

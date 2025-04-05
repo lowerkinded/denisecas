@@ -11,42 +11,45 @@ import {
 import Link from "next/link";
 import TypeBadge from "./TypeBadge";
 import moment from "moment";
+import { Experience } from "@prisma/client";
 
-export default function ExperienceCard(props: {
-  id: number;
-  author: { name: string; pictureUrl?: string };
-  type: "creativity" | "activity" | "service";
-  from: Date;
-  to: Date;
-  summary: string;
-  coverUrl?: string;
+export default function ExperienceCard({
+  experience,
+}: {
+  experience: Experience;
 }) {
-  const byline = `${props.author.pictureUrl ? "" : "— "}${props.author.name}`;
-  const from = moment(props.from).format("DD/MM/YYYY");
-  const to = moment(props.to).format("DD/MM/YYYY");
+  const byline = `${experience.author_picture_url ? "" : "— "}${
+    experience.author_name
+  }`;
+  const from = moment(experience.from_date).format("DD/MM/YYYY");
+  const to = moment(experience.to_date).format("DD/MM/YYYY");
 
   return (
     <Card shadow="sm" padding="md" radius="md" withBorder>
-      {props.coverUrl && (
+      {experience.cover_url && (
         <CardSection mb="md">
-          <Image src={props.coverUrl} height={160} />
+          <Image src={experience.cover_url} height={160} />
         </CardSection>
       )}
 
       <Group gap="sm">
-        {props.author.pictureUrl && (
-          <Avatar radius="sm" size="1.75rem" src={props.author.pictureUrl} />
+        {experience.author_picture_url && (
+          <Avatar
+            radius="sm"
+            size="1.75rem"
+            src={experience.author_picture_url}
+          />
         )}
         <Text c="gray.6">{byline}</Text>
-        {!!props.author.pictureUrl || <Space h="1.75rem" />}
+        {!!experience.author_picture_url || <Space h="1.75rem" />}
       </Group>
 
-      <Text mt="sm">{props.summary}</Text>
+      <Text mt="sm">{experience.summary}</Text>
 
       <Space h="lg" flex="1" />
 
       <Group justify="space-between">
-        <TypeBadge variant={props.type} style="adapt" size="lg" />
+        <TypeBadge variant={experience.type} style="adapt" size="lg" />
         <Text c="gray.6">
           {from}–{to}
         </Text>
@@ -56,7 +59,7 @@ export default function ExperienceCard(props: {
         mt="md"
         variant="filled"
         component={Link}
-        href={`/experience/${props.id}`}
+        href={`/experience/${experience.id}`}
       >
         Read more
       </Button>

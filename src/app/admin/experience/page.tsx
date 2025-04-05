@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import { getExperiences } from "@/lib/experience";
+import { prisma } from "@/lib/prisma";
 import {
   Anchor,
   Breadcrumbs,
@@ -16,7 +16,7 @@ import {
 import Link from "next/link";
 
 export default async function Page() {
-  const experiences = await getExperiences();
+  const experiences = await prisma.experience.findMany();
 
   return (
     <Container size={800} mt="xl">

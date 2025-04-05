@@ -1,6 +1,43 @@
-import AdminExperienceCreateForm from "@/components/AdminExperienceCreateForm";
+import AdminExperienceForm, {
+  ValuesOut,
+} from "@/components/AdminExperienceForm";
+import { prisma } from "@/lib/prisma";
 import { Anchor, Breadcrumbs, Container, Stack, Title } from "@mantine/core";
+import { ExperienceType } from "@prisma/client";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+
+async function create(
+  values: ValuesOut,
+  authorPictureUrl: string | null,
+  coverUrl: string | null,
+  mainImageUrls: string[]
+) {
+  "use server";
+
+  const row = await prisma.experience.create({
+    data: {
+      author_name: values.author.name,
+      author_email: values.author.email,
+      author_picture_url: authorPictureUrl,
+      type:
+        values.type === "creativity"
+          ? ExperienceType.CREATIVITY
+          : values.type === "activity"
+          ? ExperienceType.ACTIVITY
+          : ExperienceType.SERVICE,
+      from_date: values.range.from,
+      to_date: values.range.to,
+      summary: values.summary,
+      cover_url: coverUrl,
+      main_image_urls: mainImageUrls,
+      title: values.title,
+      md_description: values.mdDescription,
+    },
+  });
+
+  redirect(`/admin/experience/${row.id}`);
+}
 
 export default async function Page() {
   return (
@@ -18,7 +55,27 @@ export default async function Page() {
           </Anchor>
         </Breadcrumbs>
         <Title>New experience</Title>
-        <AdminExperienceCreateForm />
+        <AdminExperienceForm
+          initialValues={{
+            type: null,
+            title: "",
+            summary: "",
+            mdDescription: "",
+            author: {
+              name: "",
+              email: "",
+            },
+            range: {
+              from: null,
+              to: null,
+            },
+          }}
+          initialAuthorPictureUrl={null}
+          initialCoverUrl={null}
+          initialMainImageUrls={[]}
+          submitAction={create}
+          submitText="Create"
+        />
       </Stack>
     </Container>
   );

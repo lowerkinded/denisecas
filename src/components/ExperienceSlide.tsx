@@ -9,24 +9,25 @@ import {
 } from "@mantine/core";
 import Link from "next/link";
 import TypeBadge from "./TypeBadge";
+import { Experience } from "@prisma/client";
 
-export default function ExperienceSlide(props: {
-  id: number;
-  type: "creativity" | "activity" | "service";
-  title: string;
-  coverUrl: string | null;
+export default function ExperienceSlide({
+  experience,
+  format,
+}: {
+  experience: Experience;
   format: "big" | "small";
 }) {
   const bgImageProps =
-    props.format === "big"
-      ? { component: Link, href: `/experience/${props.id}` }
+    format === "big"
+      ? { component: Link, href: `/experience/${experience.id}` }
       : { href: "fixme" };
 
   return (
     <Paper shadow="md" withBorder radius="md">
       <AspectRatio ratio={16 / 9} w="100%" mx="auto" pos="relative">
         <BackgroundImage
-          src={props.coverUrl ?? ""}
+          src={experience.cover_url ?? ""}
           radius="md"
           {...bgImageProps}
         >
@@ -36,22 +37,22 @@ export default function ExperienceSlide(props: {
           >
             <Stack
               h="100%"
-              pb={props.format === "big" ? "2rem" : "md"}
-              px={props.format === "big" ? "lg" : "md"}
+              pb={format === "big" ? "2rem" : "md"}
+              px={format === "big" ? "lg" : "md"}
               justify="end"
             >
               <Group>
                 <TypeBadge
-                  variant={props.type}
+                  variant={experience.type}
                   style="outline"
-                  size={props.format === "big" ? "xl" : "md"}
+                  size={format === "big" ? "xl" : "md"}
                 />
                 <Text
-                  size={props.format === "big" ? "1.5rem" : "md"}
+                  size={format === "big" ? "1.5rem" : "md"}
                   fw="bold"
                   c="white"
                 >
-                  {props.title}
+                  {experience.title}
                 </Text>
               </Group>
             </Stack>
