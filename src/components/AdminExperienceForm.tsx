@@ -26,6 +26,7 @@ import {
 } from "@tabler/icons-react";
 import { upload } from "@vercel/blob/client";
 import { useState } from "react";
+import ActionFileButton from "./ActionFileButton";
 
 export type ValuesIn = {
   author: {
@@ -177,12 +178,12 @@ export default function AdminExperienceForm(props: {
           </Group>
           <Group align="center">
             {authorPictureUrl && <Avatar src={authorPictureUrl} radius="sm" />}
-            <FileButton
-              onChange={setAuthorPicture}
+            <ActionFileButton
+              action={setAuthorPicture}
               accept="image/png,image/jpeg"
             >
               {(props) => <Button {...props}>Upload face</Button>}
-            </FileButton>
+            </ActionFileButton>
           </Group>
         </Group>
         <Group align="start">
@@ -245,9 +246,9 @@ export default function AdminExperienceForm(props: {
         <Group align="center">
           {coverUrl && <Image src={coverUrl} radius="md" w="30rem" />}
           <Space flex="1" />
-          <FileButton onChange={setCover} accept="image/png,image/jpeg">
+          <ActionFileButton action={setCover} accept="image/png,image/jpeg">
             {(props) => <Button {...props}>Upload cover image</Button>}
-          </FileButton>
+          </ActionFileButton>
         </Group>
         <Divider
           label={
