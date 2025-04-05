@@ -21,10 +21,6 @@ export default function AdminFrontPageEditor({
   const [resend, setResend] = useState(Symbol());
 
   useEffect(() => {
-    if (values.length === 0) {
-      return;
-    }
-
     updateAction(values);
   }, [resend]);
 
