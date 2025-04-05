@@ -4,7 +4,7 @@ import { Container, Divider, Text, Image } from "@mantine/core";
 import Header from "@/components/Header";
 import { notFound } from "next/navigation";
 import { Carousel, CarouselSlide } from "@mantine/carousel";
-import MainImageSlide from "@/components/MainImageSlide";
+import ImageSlide from "@/components/ImageSlide";
 import { prisma } from "@/lib/prisma";
 
 export default async function Page({
@@ -31,10 +31,16 @@ export default async function Page({
     <>
       <Header />
       {experience.main_image_urls.length !== 0 && (
-        <Carousel withIndicators loop slideSize={800} mt="xl" slideGap="md">
+        <Carousel
+          withIndicators
+          slideSize={800}
+          mt="xl"
+          slideGap="md"
+          initialSlide={Math.round((experience.main_image_urls.length - 1) / 2)}
+        >
           {experience.main_image_urls.map((it) => (
             <CarouselSlide key={it}>
-              <MainImageSlide url={it} />
+              <ImageSlide alt="Experience image" src={it} />
             </CarouselSlide>
           ))}
         </Carousel>

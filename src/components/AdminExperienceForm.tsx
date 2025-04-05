@@ -8,12 +8,11 @@ import {
   Stack,
   Textarea,
   TextInput,
-  Image,
-  FileButton,
   Space,
   Text,
   Avatar,
   Divider,
+  SimpleGrid,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { isEmail, isNotEmpty, useForm } from "@mantine/form";
@@ -27,6 +26,9 @@ import {
 import { upload } from "@vercel/blob/client";
 import { useState } from "react";
 import ActionFileButton from "./ActionFileButton";
+import AdminImageCard from "./AdminImageCard";
+import { useListState } from "@mantine/hooks";
+import AdminImageAddCard from "./AdminImageAddCard";
 
 export type ValuesIn = {
   author: {
@@ -101,36 +103,18 @@ export default function AdminExperienceForm(props: {
     props.initialAuthorPictureUrl
   );
   const [coverUrl, setCoverUrl] = useState(props.initialCoverUrl);
-  const [mainImageUrls, setMainImageUrls] = useState(
+  const [mainImageUrls, handlersMainImageUrls] = useListState(
     props.initialMainImageUrls
   );
 
-  const setAuthorPicture = async (file: File | null) => {
-    if (!file) {
-      return;
-    }
-
+  const uploadBlob = async (file: File) => {
     const timestamp = new Date().getTime();
     const blob = await upload(`images/${timestamp}`, file, {
       access: "public",
       handleUploadUrl: "/upload",
     });
 
-    setAuthorPictureUrl(blob.url);
-  };
-
-  const setCover = async (file: File | null) => {
-    if (!file) {
-      return;
-    }
-
-    const timestamp = new Date().getTime();
-    const blob = await upload(`images/${timestamp}`, file, {
-      access: "public",
-      handleUploadUrl: "/upload",
-    });
-
-    setCoverUrl(blob.url);
+    return blob.url;
   };
 
   return (
@@ -179,7 +163,10 @@ export default function AdminExperienceForm(props: {
           <Group align="center">
             {authorPictureUrl && <Avatar src={authorPictureUrl} radius="sm" />}
             <ActionFileButton
-              action={setAuthorPicture}
+              action={async (file) => {
+                if (!file) return;
+                setAuthorPictureUrl(await uploadBlob(file));
+              }}
               accept="image/png,image/jpeg"
             >
               {(props) => <Button {...props}>Upload face</Button>}
@@ -243,13 +230,27 @@ export default function AdminExperienceForm(props: {
           }
           labelPosition="left"
         />
-        <Group align="center">
-          {coverUrl && <Image src={coverUrl} radius="md" w="30rem" />}
-          <Space flex="1" />
-          <ActionFileButton action={setCover} accept="image/png,image/jpeg">
-            {(props) => <Button {...props}>Upload cover image</Button>}
-          </ActionFileButton>
-        </Group>
+
+        {coverUrl && (
+          <AdminImageCard
+            src={coverUrl}
+            onRemove={() => setCoverUrl(null)}
+            onReplace={async (file) => {
+              if (!file) return;
+              setCoverUrl(await uploadBlob(file));
+            }}
+          />
+        )}
+        {!coverUrl && (
+          <AdminImageAddCard
+            onAdd={async (file) => {
+              if (!file) return;
+              setCoverUrl(await uploadBlob(file));
+            }}
+          >
+            Add a cover image
+          </AdminImageAddCard>
+        )}
         <Divider
           label={
             <Text fw="bold" tt="uppercase">
@@ -258,7 +259,29 @@ export default function AdminExperienceForm(props: {
           }
           labelPosition="left"
         />
-        <Text>Coming soon</Text>
+        <Group align="start">
+          <SimpleGrid cols={2} flex="1">
+            {mainImageUrls.map((it, i) => (
+              <AdminImageCard
+                key={it}
+                src={it}
+                onRemove={() => handlersMainImageUrls.remove(i)}
+                onReplace={async (file) => {
+                  if (!file) return;
+                  handlersMainImageUrls.setItem(i, await uploadBlob(file));
+                }}
+              />
+            ))}
+            <AdminImageAddCard
+              onAdd={async (file) => {
+                if (!file) return;
+                handlersMainImageUrls.append(await uploadBlob(file));
+              }}
+            >
+              Add a main image
+            </AdminImageAddCard>
+          </SimpleGrid>
+        </Group>
         <Button disabled={loading} loading={loading} type="submit" mt="md">
           {props.submitText}
         </Button>

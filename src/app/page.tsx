@@ -18,7 +18,13 @@ export default async function Page() {
   return (
     <>
       <Header />
-      <Carousel withIndicators loop slideSize={800} mt="xl" slideGap="md">
+      <Carousel
+        withIndicators
+        slideSize={800}
+        mt="xl"
+        slideGap="md"
+        initialSlide={Math.round((carousel.length - 1) / 2)}
+      >
         {carousel.map((it) => (
           <CarouselSlide key={it.id}>
             <ExperienceSlide experience={it} format="big" />
