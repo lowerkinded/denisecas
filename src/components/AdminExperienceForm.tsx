@@ -17,6 +17,7 @@ import {
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { isEmail, isNotEmpty, useForm } from "@mantine/form";
+import { ExperienceType } from "@prisma/client";
 import {
   IconAt,
   IconCalendar,
@@ -35,7 +36,7 @@ export type ValuesIn = {
     from: Date | null;
     to: Date | null;
   };
-  type: "creativity" | "activity" | "service" | null;
+  type: ExperienceType | null;
   title: string;
   summary: string;
   mdDescription: string;
@@ -50,7 +51,7 @@ export type ValuesOut = {
     from: Date;
     to: Date;
   };
-  type: "creativity" | "activity" | "service";
+  type: ExperienceType;
   title: string;
   summary: string;
   mdDescription: string;
@@ -206,9 +207,9 @@ export default function AdminExperienceForm(props: {
               {...form.getInputProps("type")}
               key={form.key("type")}
               data={[
-                { label: "Creativity", value: "creativity" },
-                { label: "Activity", value: "activity" },
-                { label: "Service", value: "Service" },
+                { label: "Creativity", value: ExperienceType.CREATIVITY },
+                { label: "Activity", value: ExperienceType.ACTIVITY },
+                { label: "Service", value: ExperienceType.SERVICE },
               ]}
               display="flex"
             />

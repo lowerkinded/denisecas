@@ -3,7 +3,6 @@ import AdminExperienceForm, {
 } from "@/components/AdminExperienceForm";
 import { prisma } from "@/lib/prisma";
 import { Anchor, Breadcrumbs, Container, Stack, Title } from "@mantine/core";
-import { ExperienceType } from "@prisma/client";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -20,12 +19,7 @@ async function create(
       author_name: values.author.name,
       author_email: values.author.email,
       author_picture_url: authorPictureUrl,
-      type:
-        values.type === "creativity"
-          ? ExperienceType.CREATIVITY
-          : values.type === "activity"
-          ? ExperienceType.ACTIVITY
-          : ExperienceType.SERVICE,
+      type: values.type,
       from_date: values.range.from,
       to_date: values.range.to,
       summary: values.summary,

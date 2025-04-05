@@ -15,7 +15,6 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import { ExperienceType } from "@prisma/client";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
@@ -53,12 +52,7 @@ export default async function Page({
         author_name: values.author.name,
         author_email: values.author.email,
         author_picture_url: authorPictureUrl,
-        type:
-          values.type === "creativity"
-            ? ExperienceType.CREATIVITY
-            : values.type === "activity"
-            ? ExperienceType.ACTIVITY
-            : ExperienceType.SERVICE,
+        type: values.type,
         from_date: values.range.from,
         to_date: values.range.to,
         summary: values.summary,
@@ -154,12 +148,7 @@ export default async function Page({
         </Group>
         <AdminExperienceForm
           initialValues={{
-            type:
-              experience.type === ExperienceType.CREATIVITY
-                ? "creativity"
-                : experience.type === ExperienceType.ACTIVITY
-                ? "activity"
-                : "service",
+            type: experience.type,
             title: experience.title,
             summary: experience.summary,
             mdDescription: experience.md_description,
