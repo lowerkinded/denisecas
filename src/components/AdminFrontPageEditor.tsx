@@ -31,7 +31,7 @@ export default function AdminFrontPageEditor({
       </Text>
       <Box w="20rem" h="11.25rem">
         <Draggable index={i} draggableId={`${it.id}`}>
-          {(provided, snapshot) => (
+          {(provided) => (
             <div
               {...provided.draggableProps}
               {...provided.dragHandleProps}

@@ -46,7 +46,7 @@ export default function Header() {
             rel="noopener"
             target="_blank"
           >
-            What's DENISE?
+            What&apos;s DENISE?
           </Text>
           <Text
             c="teal.6"
@@ -56,7 +56,7 @@ export default function Header() {
             rel="noopener"
             target="_blank"
           >
-            What's CAS?
+            What&apos;s CAS?
           </Text>
           <Text
             c="teal.6"

@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import { Container, Divider, Text, Image, Space, Title } from "@mantine/core";
+import { Container, Divider, Space, Title } from "@mantine/core";
 import Header from "@/components/Header";
 import { notFound } from "next/navigation";
 import { Carousel, CarouselSlide } from "@mantine/carousel";

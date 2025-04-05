@@ -28,7 +28,7 @@ export default function ExperienceCard({
     <Card shadow="sm" padding="md" radius="md" withBorder>
       {experience.cover_url && (
         <CardSection mb="md">
-          <Image src={experience.cover_url} height={160} />
+          <Image alt="Cover image" src={experience.cover_url} height={160} />
         </CardSection>
       )}
 
